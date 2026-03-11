@@ -1,0 +1,572 @@
+ <!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rompe la Adicción</title>
+
+  <style>
+    /* ====== RESET BÁSICO ====== */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      line-height: 1.5;
+      background: #0b0f14;
+      color: #eaf0ff;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+
+    /* ====== CONTENEDOR ====== */
+    .container {
+      width: min(1100px, 92%);
+      margin: 0 auto;
+    }
+
+    /* ====== NAV ====== */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(10px);
+      background: rgba(11, 15, 20, 0.7);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 0;
+      gap: 16px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      letter-spacing: 0.4px;
+    }
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #7c3aed, #22c55e);
+      box-shadow: 0 0 18px rgba(124,58,237,0.5);
+    }
+    .links {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+    .link {
+      padding: 8px 10px;
+      border-radius: 10px;
+      opacity: 0.9;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.03);
+      transition: transform .15s ease, opacity .15s ease;
+    }
+    .link:hover { transform: translateY(-1px); opacity: 1; }
+
+    /* ====== HERO ====== */
+    .hero {
+      padding: 48px 0 22px;
+      background:
+        radial-gradient(900px 300px at 20% 20%, rgba(124,58,237,0.35), transparent 60%),
+        radial-gradient(900px 300px at 80% 10%, rgba(34,197,94,0.25), transparent 55%),
+        radial-gradient(900px 500px at 50% 100%, rgba(59,130,246,0.20), transparent 60%);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 18px;
+      align-items: start;
+    }
+    h1 {
+      font-size: clamp(30px, 4vw, 52px);
+      line-height: 1.05;
+      letter-spacing: -0.8px;
+    }
+    .subtitle {
+      margin-top: 12px;
+      max-width: 60ch;
+      color: rgba(234,240,255,0.86);
+      font-size: 16px;
+    }
+    .badge-row {
+      margin-top: 16px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .badge {
+      padding: 7px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.04);
+      font-size: 13px;
+      color: rgba(234,240,255,0.85);
+    }
+    .cta-row {
+      margin-top: 18px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .btn {
+      border: 0;
+      cursor: pointer;
+      padding: 12px 14px;
+      border-radius: 14px;
+      font-weight: 700;
+      transition: transform .15s ease, filter .15s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      user-select: none;
+    }
+    .btn:active { transform: translateY(1px); }
+    .btn-primary {
+      background: linear-gradient(90deg, #7c3aed, #3b82f6);
+      color: white;
+      box-shadow: 0 10px 30px rgba(124,58,237,0.25);
+    }
+    .btn-ghost {
+      background: rgba(255,255,255,0.04);
+      color: rgba(234,240,255,0.9);
+      border: 1px solid rgba(255,255,255,0.10);
+    }
+
+    .hero-card {
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.04);
+      border-radius: 18px;
+      padding: 16px;
+    }
+    .hero-card h3 { font-size: 16px; margin-bottom: 8px; }
+    .hero-card p { color: rgba(234,240,255,0.80); font-size: 14px; }
+    .tip {
+      margin-top: 12px;
+      padding: 12px;
+      border-radius: 14px;
+      border: 1px dashed rgba(255,255,255,0.18);
+      background: rgba(0,0,0,0.12);
+      font-size: 14px;
+      color: rgba(234,240,255,0.86);
+    }
+
+    /* ====== SECCIONES ====== */
+    .section {
+      padding: 26px 0;
+    }
+    .section-title {
+      font-size: 22px;
+      margin-bottom: 8px;
+      letter-spacing: -0.2px;
+    }
+    .section-desc {
+      color: rgba(234,240,255,0.78);
+      margin-bottom: 14px;
+      max-width: 80ch;
+    }
+
+    /* ====== TARJETAS ====== */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 12px;
+    }
+    .card {
+      grid-column: span 6;
+      border-radius: 18px;
+      padding: 16px;
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.04);
+      transition: transform .15s ease;
+    }
+    .card:hover { transform: translateY(-2px); }
+    .card h3 { font-size: 16px; margin-bottom: 6px; }
+    .card ul { margin-top: 8px; padding-left: 18px; color: rgba(234,240,255,0.82); }
+    .card li { margin: 6px 0; }
+
+    /* ====== CHECKLIST ====== */
+    .checklist {
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.04);
+      padding: 16px;
+    }
+    .checklist-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+      margin-top: 10px;
+    }
+    .input {
+      flex: 1;
+      min-width: 180px;
+      padding: 12px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(0,0,0,0.18);
+      color: #eaf0ff;
+      outline: none;
+    }
+    .list {
+      margin-top: 12px;
+      display: grid;
+      gap: 10px;
+    }
+    .item {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(0,0,0,0.12);
+    }
+    .muted { color: rgba(234,240,255,0.72); font-size: 13px; }
+    .pill {
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.04);
+      font-size: 12px;
+      align-self: start;
+      white-space: nowrap;
+    }
+
+    /* ====== FOOTER ====== */
+    .footer {
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding: 22px 0 40px;
+      color: rgba(234,240,255,0.7);
+      font-size: 13px;
+    }
+
+    /* ====== RESPONSIVE ====== */
+    @media (max-width: 900px) {
+      .hero-grid { grid-template-columns: 1fr; }
+      .card { grid-column: span 12; }
+      .links { gap: 8px; }
+      .link { padding: 7px 9px; }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- NAV -->
+  <header class="nav">
+    <div class="container nav-inner">
+      <div class="brand">
+        <span class="dot"></span>
+        <span>Rompe la Adicción</span>
+      </div>
+
+      <nav class="links" aria-label="Navegación">
+        <a class="link" href="#que-es">¿Qué es?</a>
+        <a class="link" href="#drogas">Drogas</a>
+        <a class="link" href="#videojuegos">Videojuegos</a>
+        <a class="link" href="#prevencion">Prevención</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container hero-grid">
+      <div>
+        <h1>Tu vida vale más que una adicción.</h1>
+        <p class="subtitle">
+          Las adicciones (drogas o videojuegos) pueden parecer “una salida”, pero terminan quitando
+          tiempo, salud y oportunidades. La buena noticia: sí se puede mejorar, paso a paso.
+        </p>
+
+        <div class="badge-row">
+          <span class="badge">✅ Información clara</span>
+          <span class="badge">🧠 Señales de alerta</span>
+          <span class="badge">🛠️ Soluciones prácticas</span>
+        </div>
+
+        <div class="cta-row">
+          <a class="btn btn-primary" href="#prevencion">Empezar un plan</a>
+          <button class="btn btn-ghost" id="btnTip">Dame un consejo rápido</button>
+        </div>
+      </div>
+
+      <aside class="hero-card">
+        <h3>Frase de impacto</h3>
+    <aside class="hero-card">
+  <h3>Frase de impacto</h3>
+
+  <img src="https://images.unsplash.com/photo-1506126613408-eca07ce68773"
+       alt="Persona reflexionando sobre su vida"
+       style="border-radius:12px; margin-bottom:10px;">
+
+  <p>“Lo que repites cada día, te construye… o te destruye.”</p>
+        <p>“Lo que repites cada día, te construye… o te destruye.”</p>
+        <div class="tip" id="tipBox">
+          Consejo: Reduce “gatillos” (cosas que te empujan a caer), y aumenta “apoyos” (personas/hábitos que te levantan).
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- SECCIÓN: ¿QUÉ ES? -->
+  <section class="section" id="que-es">
+    <div class="container">
+      <h2 class="section-title">¿Qué es la adicción?</h2>
+      <p class="section-desc">
+        Una adicción es cuando una conducta o sustancia se vuelve difícil de controlar, aunque te cause daño.
+        No es “falta de voluntad”: también influye el cerebro, el estrés, el entorno y los hábitos.
+      </p>
+
+      <div class="grid">
+        <div class="card">
+          <h3>Señales comunes</h3>
+          <ul>
+            <li>Necesitas más para sentir lo mismo (tolerancia).</li>
+            <li>Te cuesta parar aunque lo intentes.</li>
+            <li>Descuidas estudio, familia, salud o sueño.</li>
+            <li>Te sientes ansioso o irritable si no lo haces.</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h3>¿Por qué engancha?</h3>
+          <ul>
+            <li>El cerebro busca recompensa rápida (placer inmediato).</li>
+            <li>El estrés y los problemas aumentan el riesgo.</li>
+            <li>Si es fácil de acceder, es más difícil salir.</li>
+            <li>Repetición = hábito fuerte.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECCIÓN: DROGAS -->
+  <section class="section" id="drogas">
+    <div class="container">
+      <h2 class="section-title">Adicción a las drogas</h2>
+      <p class="section-desc">
+        Las drogas pueden causar dependencia y afectar el cuerpo y la mente. Además, muchas traen riesgos legales
+        y sociales que empeoran el problema.
+      </p>
+
+      <div class="grid">
+        <div class="card">
+          <h3>Consecuencias físicas</h3>
+   <div class="card">
+  <h3>Consecuencias físicas</h3>
+
+  <img src="https://images.unsplash.com/photo-1585435557343-3b092031a831"
+       alt="Problemas de salud por drogas"
+       style="border-radius:12px; margin:10px 0;">
+
+  <ul>
+          <ul>
+            <li>Daño a órganos (corazón, hígado, cerebro).</li>
+            <li>Problemas de sueño y energía.</li>
+            <li>Baja defensas y más enfermedades.</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h3>Consecuencias emocionales</h3>
+          <ul>
+            <li>Ansiedad, depresión o irritabilidad.</li>
+            <li>Aislamiento y conflictos familiares.</li>
+            <li>Decisiones impulsivas y arrepentimiento.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECCIÓN: VIDEOJUEGOS -->
+  <section class="section" id="videojuegos">
+    <div class="container">
+      <h2 class="section-title">Adicción a los videojuegos</h2>
+      <p class="section-desc">
+        Jugar no es malo. El problema aparece cuando el juego domina tu vida: sueño, notas, relaciones,
+        higiene, alimentación o responsabilidades.
+      </p>
+
+      <div class="grid">
+        <div class="card">
+          <h3>Señales de uso excesivo</h3>
+   <div class="card">
+  <h3>Señales de uso excesivo</h3>
+
+  <img src="https://images.unsplash.com/photo-1511512578047-dfb367046420"
+       alt="Persona jugando videojuegos"
+       style="border-radius:12px; margin:10px 0;">
+
+  <ul>
+          <ul>
+            <li>Pierdes el control del tiempo (“solo 30 min” y son 5 horas).</li>
+            <li>Te enojas si te interrumpen o te quitan el juego.</li>
+            <li>Dejas tareas o faltas a clases por jugar.</li>
+            <li>Duermes tarde y te cuesta rendir.</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h3>Efectos en la vida diaria</h3>
+          <ul>
+            <li>Fatiga, dolor de cabeza, mala postura.</li>
+            <li>Menos socialización real.</li>
+            <li>Procrastinación (dejar todo para después).</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECCIÓN: PREVENCIÓN -->
+  <section class="section" id="prevencion">
+    <div class="container">
+      <h2 class="section-title">Prevención y soluciones</h2>
+      <p class="section-desc">
+        No necesitas cambiar tu vida en un día. Empieza con un plan pequeño, medible y realista.
+        Aquí puedes escribir tus “pasos” y verlos como lista.
+      </p>
+
+      <div class="checklist">
+<img src="https://images.unsplash.com/photo-1499750310107-5fef28a66643"
+     alt="Persona escribiendo metas"
+     style="border-radius:12px; margin:10px 0;">
+        <h3 style="font-size:16px; margin-bottom:6px;">Tu mini plan (editable)</h3>
+        <p class="muted">Ejemplos: “Dormir antes de las 11”, “Jugar solo 1h”, “Salir a caminar 20 min”, “Hablar con alguien”.</p>
+
+        <div class="checklist-row">
+          <input class="input" id="planInput" type="text" placeholder="Escribe un paso pequeño..." />
+          <button class="btn btn-primary" id="addBtn" type="button">Agregar</button>
+          <button class="btn btn-ghost" id="clearBtn" type="button">Borrar todo</button>
+        </div>
+
+        <div class="list" id="planList"></div>
+
+        <p class="muted" style="margin-top:12px;">
+          Si sientes que no puedes solo, hablar con un adulto de confianza o un profesional es una señal de fuerza, no de vergüenza.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div style="display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap;">
+        <span>© 2026 — Página educativa (HTML + CSS)</span>
+        <span class="muted">Aprendiendo</span>
+        <span class="muted">© Dimando</span>
+        <span class="muted">Unidad Educativa Monseñor Leonidas Proaño</span>
+      </div>
+    </div>
+  </footer>
+
+<script>
+  // Consejos rápidos
+  const tips = [
+    "Cambia el entorno: si algo te tienta, aléjalo (apps, contactos, horarios).",
+    "Hazlo fácil: reemplaza el hábito por otro corto (agua, caminar 5 min).",
+    "Usa límites claros: 'juego 1 hora' + alarma + paro sin negociar.",
+    "Duerme mejor: el cansancio hace más fácil caer en hábitos malos.",
+    "Pide apoyo: hablar con alguien reduce la presión y te da fuerza.",
+  ];
+
+  const tipBox = document.getElementById("tipBox");
+
+  document.getElementById("btnTip").addEventListener("click", () => {
+    const random = tips[Math.floor(Math.random() * tips.length)];
+    tipBox.textContent = "Consejo: " + random;
+  });
+
+  // Elementos
+  const input = document.getElementById("planInput");
+  const list = document.getElementById("planList");
+  const addBtn = document.getElementById("addBtn");
+  const clearBtn = document.getElementById("clearBtn");
+
+  // Guardar en localStorage
+  function saveList() {
+    const items = [];
+    document.querySelectorAll(".item strong").forEach(el => {
+      items.push(el.textContent);
+    });
+    localStorage.setItem("miPlan", JSON.stringify(items));
+  }
+
+  // Cargar desde localStorage
+  function loadList() {
+    const saved = localStorage.getItem("miPlan");
+    if (!saved) return;
+
+    const items = JSON.parse(saved);
+    items.forEach(text => addItem(text));
+  }
+
+  // Crear item
+  function addItem(text) {
+    const item = document.createElement("div");
+    item.className = "item";
+
+    const left = document.createElement("div");
+    left.innerHTML = `<strong>${text}</strong><div class="muted">Paso pequeño y realista</div>`;
+
+    const right = document.createElement("div");
+    right.className = "pill";
+    right.textContent = "Hecho ✅";
+
+    let done = false;
+
+    item.addEventListener("click", () => {
+      done = !done;
+      item.style.opacity = done ? "0.6" : "1";
+      item.style.textDecoration = done ? "line-through" : "none";
+      right.textContent = done ? "Completado ✅" : "Hecho ✅";
+    });
+
+    item.appendChild(left);
+    item.appendChild(right);
+    list.appendChild(item);
+
+    saveList();
+  }
+
+  // Botón agregar
+  addBtn.addEventListener("click", () => {
+    const text = input.value.trim();
+    if (!text) return;
+
+    addItem(text);
+
+    input.value = "";
+    input.focus();
+  });
+
+  // Enter para agregar
+  input.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      addBtn.click();
+    }
+  });
+
+  // Borrar todo
+  clearBtn.addEventListener("click", () => {
+    list.innerHTML = "";
+    localStorage.removeItem("miPlan");
+  });
+
+  // Cargar datos guardados
+  loadList();
+</script>
+</body>
+</html>
